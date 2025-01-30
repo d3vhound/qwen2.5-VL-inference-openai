@@ -276,6 +276,11 @@ async def chat_completions(request: ChatCompletionRequest):
                                     "type": "image",
                                     "image": process_base64_image(content_item.image_url["url"])
                                 })
+                            else:
+                                processed_content.append({
+                                    "type": "image",
+                                    "image": content_item.image_url["url"]
+                                })
                 messages.append({"role": msg.role, "content": processed_content})
         
         text = processor.apply_chat_template(
