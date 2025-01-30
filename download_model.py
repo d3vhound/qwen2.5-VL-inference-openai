@@ -25,7 +25,7 @@ def download_model():
         device_map="auto",
         offload_folder="offload",  # Temporary directory for offloading
         offload_state_dict=True,   # Enable state dict offloading
-        low_cpu_mem_usage=False     # Enable low CPU memory usage
+        low_cpu_mem_usage=True     # Enable low CPU memory usage
     )
     
     print("Saving model...")
