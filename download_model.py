@@ -4,7 +4,7 @@ import torch
 from accelerate import init_empty_weights
 from accelerate.utils import load_and_quantize_model
 
-MODEL_DIR = "models/Qwen2.5-VL-7B-Instruct"
+MODEL_DIR = "models/Qwen2.5-VL-72B-Instruct"
 
 def download_model():
     print(f"Downloading model to {MODEL_DIR}...")
@@ -14,18 +14,18 @@ def download_model():
     
     # Download and save processor first
     print("Downloading and saving processor...")
-    processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")
+    processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-72B-Instruct")
     processor.save_pretrained(MODEL_DIR)
     
     print("Downloading and saving model...")
     # Initialize model with better memory handling
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-        "Qwen/Qwen2.5-VL-7B-Instruct",
+        "Qwen/Qwen2.5-VL-72B-Instruct",
         torch_dtype=torch.float16,
         device_map="auto",
         offload_folder="offload",  # Temporary directory for offloading
         offload_state_dict=True,   # Enable state dict offloading
-        low_cpu_mem_usage=True     # Enable low CPU memory usage
+        low_cpu_mem_usage=False     # Enable low CPU memory usage
     )
     
     print("Saving model...")
@@ -33,7 +33,6 @@ def download_model():
     model.save_pretrained(
         MODEL_DIR,
         safe_serialization=True,
-        max_shard_size="2GB"
     )
     
     # Clean up offload folder if it exists
