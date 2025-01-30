@@ -22,7 +22,7 @@ services:
       - POSTGRES_PASSWORD=quotes_pass
       - POSTGRES_HOST=db
       - DEV_MODE=true
-    shm_size: '8gb'
+    shm_size: '80gb'
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9192/health"]
